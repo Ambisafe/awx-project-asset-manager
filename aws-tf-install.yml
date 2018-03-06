@@ -43,9 +43,9 @@
 
         aws_vpc_default: "{{  aws_vpc_default }}"
         aws_vpc_id: "{{ aws_vpc_id }}"
-        aws_subnet_id_a : "{{ aws_subnet_id_a }}"
-        aws_subnet_id_b : "{{ aws_subnet_id_b }}"
-        aws_subnet_id_c : "{{ aws_subnet_id_c }}"
+        aws_subnet_id_a: "{{ aws_subnet_id_a }}"
+        aws_subnet_id_b: "{{ aws_subnet_id_b }}"
+        aws_subnet_id_c: "{{ aws_subnet_id_c }}"
 
         ecs_min_size: "{{ ecs_min_size }}"
         ecs_max_size: "{{ ecs_max_size }}"
