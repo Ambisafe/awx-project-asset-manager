@@ -4,10 +4,9 @@
 
   # variables passed from AWX job survey:
 
-    # {{ project_name | string }}
     # {{ project_deployment_environment | string }}
 
-    # {{ aws_region | string }}
+    # {{ aws_region_name | string }}
     # {{ aws_vpc_default | string }}
     # {{ aws_vpc_id | string }}
     # {{ aws_subnet_id_a | string }}
@@ -19,24 +18,16 @@
     # {{ ecs_desired_capacity | integer }}
     # {{ ecs_instance_type | string }}
     # {{ ecs_block_device_size | integer }}
-    # {{ ecs_ssh_public_key | string }}
 
     # {{ db_instance_type | string }}
-    # {{ db_engine | string }}
     # {{ db_allocated_storage_size | integer }}
-    # {{ db_name | string }}
-    # {{ db_username | string }}
-    # {{ db_password | string }}
+
     # {{ db_skip_final_snapshot | string }}
-
-
-    # {{ terraform_dir | string }}
-    # {{ terraform_data_dir | string }}
 
     # {{ route53_domain_name | string }}
 
   vars:
-
+    db_engine: "mysql"
     db_engine_version: 5.6.37
 
   tasks:
@@ -48,7 +39,7 @@
     - include_role:
         name: terraform-aws
       vars:
-        project_name: "{{ project_name }}"
+        project_name: "am"
         project_deployment_environment: "{{ project_deployment_environment }}"
 
         aws_vpc_default: "{{  aws_vpc_default }}"
@@ -62,15 +53,15 @@
         ecs_desired_capacity: "{{ ecs_desired_capacity }}"
         ecs_instance_type: "{{ ecs_instance_type }}"
         ecs_block_device_size: "{{ ecs_block_device_size }}"
-        ecs_ssh_public_key: "{{ ecs_ssh_public_key }}"
+        ecs_ssh_public_key: "{{ ssh_public_key }}"
 
         db_instance_type: "{{ db_instance_type }}"
         db_engine: "{{ db_engine }}"
         db_engine_version: "{{ db_engine_version }}"
         db_allocated_storage_size: "{{ db_allocated_storage_size }}"
-        db_name: "{{ db_name }}"
-        db_username: "{{ db_username }}"
-        db_password: "{{ db_password }}"
+        db_name: "{{ rds_db }}"
+        db_username: "{{ rds_user }}"
+        db_password: "{{ rds_pass }}"
         db_skip_final_snapshot: "{{ db_skip_final_snapshot }}"
 
         route53_domain_name: "{{ route53_domain_name }}"
