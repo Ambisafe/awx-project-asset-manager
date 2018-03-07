@@ -60,6 +60,8 @@
 
         cloudflare_email: "{{ cloudflare_email }}"
         cloudflare_access_token: "{{ cloudflare_access_token }}"
+        docker_hub_username: "{{ docker_hub_username }}"
+        docker_hub_password: "{{ docker_hub_password }}"
 
         db_instance_type: "{{ db_instance_type }}"
         db_engine: "mysql"
