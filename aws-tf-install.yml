@@ -6,6 +6,7 @@
 
     # {{ project_deployment_environment | string }}
     # {{ project_zone_cloudflare | string }}
+    # {{ project_zone_main | string }}
 
     # {{ aws_region_name | string }}
     # {{ aws_vpc_default | string }}
@@ -41,6 +42,8 @@
       vars:
         project_name: "am"
         project_deployment_environment: "{{ project_deployment_environment }}"
+        project_zone_main: "{{ project_zone_main }}"
+        project_zone_cloudflare: "{{ project_zone_cloudflare }}"
 
         aws_vpc_default: "{{  aws_vpc_default }}"
         aws_vpc_id: "{{ aws_vpc_id }}"
@@ -54,7 +57,7 @@
         ecs_instance_type: "{{ ecs_instance_type }}"
         ecs_block_device_size: "{{ ecs_block_device_size }}"
         ecs_ssh_public_key: "{{ ssh_public_key }}"
-        project_zone_cloudflare: "{{ project_zone_cloudflare }}"
+
         cloudflare_email: "{{ cloudflare_email }}"
         cloudflare_access_token: "{{ cloudflare_access_token }}"
 
