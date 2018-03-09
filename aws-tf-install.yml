@@ -32,6 +32,8 @@
 
     # {{ route53_domain_name | string }}
 
+    # {{ terraform_arg | string }}"
+
   vars:
     db_engine_version: 5.6.37
 
@@ -85,5 +87,6 @@
         db_skip_final_snapshot: "{{ db_skip_final_snapshot }}"
 
         route53_domain_name: "{{ route53_domain_name }}"
+        terraform_arg: "{{ terraform_arg }}"
 
 
