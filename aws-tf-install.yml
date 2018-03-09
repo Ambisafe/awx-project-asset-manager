@@ -69,8 +69,8 @@
         ecs_block_device_size: "{{ ecs_block_device_size }}"
         ecs_ssh_public_key: "{{ ssh_public_key }}"
 
-        ecc_node_type: {{ ecc_node_type }}
-        ecc_num_cache_nodes: {{ ecc_num_cache_nodes }}
+        ecc_node_type: "{{ ecc_node_type }}"
+        ecc_num_cache_nodes: "{{ ecc_num_cache_nodes }}"
 
         cloudflare_email: "{{ cloudflare_email }}"
         cloudflare_access_token: "{{ cloudflare_access_token }}"
