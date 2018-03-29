@@ -68,7 +68,7 @@
         ecs_instance_type: "{{ ecs_instance_type }}"
         ecs_block_device_size: "{{ ecs_block_device_size }}"
         ecs_ssh_public_key: "{{ ssh_public_key }}"
-        ecs_nginx_conf_b64: "{{ lookup('file', 'files/nginx/nginx.conf') | base64 }}"
+        ecs_nginx_conf_b64: "{{ lookup('file', 'files/nginx.conf') | base64 }}"
 
         ecc_node_type: "{{ ecc_node_type }}"
         ecc_num_cache_nodes: "{{ ecc_num_cache_nodes }}"
