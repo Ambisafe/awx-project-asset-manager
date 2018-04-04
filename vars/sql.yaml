@@ -4,14 +4,14 @@ sql_query_total: >-
   ( select count(*) from users_user ) as TotalUsers,
   ( select count(*) from transactions_ethereumtransaction ) as TotalTransactions
   into outfile '/tmp/total.csv'
-  fields terminated by \',\';
+  fields terminated by ',';
 
 sql_query_org_address: |
   select address as OrganizationsAddresses from accounts_ethereumcurrency where address != ''
   into outfile '/tmp/org_address.csv'
-  fields terminated by \',\';
+  fields terminated by ',';
 
 sql_query_active_users: |
   select user_id as User, count(*) as TransactionCount from transactions_ethereumtransactionconfirmation group by user_id
   into outfile '/tmp/active_users.csv'
-  fields terminated by \',\';
+  fields terminated by ',';
