@@ -9,10 +9,22 @@
   # {{ rds_pass }}
   # {{ rds_user }}
 
+  environment:
+
+    RDS_DB: "{{ rds_db }}"
+    RDS_HOST: "{{ rds_host }}"
+    RDS_PASS: "{{ rds_pass }}"
+    RDS_USER: "{{ rds_user }}"
+
   pre_tasks:
 
     - name: pip
       block:
+
+        - name: install mysql-client
+          package:
+            name: mysql
+            state: present
 
         - name: check to see if pip is already installed
           command: "pip --version"
@@ -30,8 +42,9 @@
             name: "{{ item.key }}"
             version: "{{ item.value }}"
             executable: pip2.7
+            extra_args: --ignore-installed
           with_dict:
-            docker: 2.7.0
+            MySQL-python: 1.2.5
 
   tasks:
     
@@ -43,19 +56,23 @@
     - name: total
       block:
 
+        # - name: run total report
+        #   docker_container:
+        #     name: ambi_vault_billing_total_report
+        #     image: mysql:5.7
+        #     command: sh -c "exec mysql -h${RDS_HOST} -P3306 -u${RDS_USER} -p${RDS_PASS} -e \"{{ sql_query_total }}\" ${RDS_PASS}"
+        #     state: started
+        #     restart: no
+        #     auto_remove: no
+        #     env:
+        #       RDS_HOST: "{{ rds_host }}"
+        #       RDS_DB: "{{ rds_db }}"
+        #       RDS_USER: "{{ rds_user }}"
+        #       RDS_PASS: "{{ rds_pass }}"
+        #   register: total_report
+
         - name: run total report
-          docker_container:
-            name: ambi_vault_billing_total_report
-            image: mysql:5.7
-            command: sh -c "exec mysql -h${RDS_HOST} -P3306 -u${RDS_USER} -p${RDS_PASS} -e \"{{ sql_query_total }}\"" ${RDS_DB}
-            state: started
-            restart: no
-            auto_remove: no
-            env:
-              RDS_HOST: "{{ rds_host }}"
-              RDS_DB: "{{ rds_db }}"
-              RDS_USER: "{{ rds_user }}"
-              RDS_PASS: "{{ rds_pass }}"
+          command: mysql -h {{ lookup('env','RDS_HOST') }} -u {{ lookup('env','RDS_USER') }} -p {{ lookup('env','RDS_PASS') }} {{ lookup('env','RDS_PASS') }} -Ns -e "{{ sql_query_total }}"
           register: total_report
 
         - debug:
