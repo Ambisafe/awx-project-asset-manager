@@ -9,6 +9,10 @@
   # {{ rds_pass }}
   # {{ rds_user }}
 
+  pre-tasks:
+
+    - include_vars: vars/sql.yaml
+
   tasks:
   
     - name: total
