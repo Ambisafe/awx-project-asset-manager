@@ -11,7 +11,7 @@
 
   vars:
 
-    report_file_name: "/tmp/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip"
+    report_file_name: "~/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip"
 
   pre_tasks:
 
