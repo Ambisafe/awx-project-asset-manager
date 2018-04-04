@@ -9,7 +9,7 @@
   # {{ rds_pass }}
   # {{ rds_user }}
 
-  pre-tasks:
+  pre_tasks:
 
     - name: pip
       block:
