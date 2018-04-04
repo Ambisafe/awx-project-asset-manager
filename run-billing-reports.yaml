@@ -53,28 +53,28 @@
         #   register: total_report
 
         - name: run total report
-          command: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_total }}" {{ rds_db }} | sed "s/\t/,/g;" > /tmp/total.csv
+          shell: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_total }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/total.csv
           register: total_report
 
         - debug:
             var: total_report.stdout
 
         - name: run org address report
-          command: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_org_address }}" {{ rds_db }} | sed "s/\t/,/g;" > /tmp/org_address.csv
+          command: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_org_address }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/org_address.csv
           register: org_report
 
         - debug:
             var: org_report.stdout
 
         - name: run active users report
-          command: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_active_users }}" {{ rds_db }} | sed "s/\t/,/g;" > /tmp/active_users.csv
+          command: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_active_users }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/active_users.csv
           register: users_report
 
         - debug:
             var: users_report.stdout
 
         - file:
-            path: /etc/foo.conf
+            path: "{{ item }}"
             state: absent
           with_items:
             - /tmp/total.csv
