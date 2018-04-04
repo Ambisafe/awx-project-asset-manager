@@ -8,6 +8,7 @@
   # {{ rds_host }}
   # {{ rds_pass }}
   # {{ rds_user }}
+  # {{ send_report_email_to }}
 
   vars:
 
@@ -62,7 +63,7 @@
             port: 25
             subject: Ambi Vault Weekly Report ({{ lookup('pipe','date +%Y-%m-%d') }})
             from: awx@ambisafe.com (Ambisafe AWX)
-            to: Oleh Vasylenko <ihor@ambisafe.com>
+            to: "{{ send_report_email_to }}"
             attach: /tmp/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip
 
         - file:
