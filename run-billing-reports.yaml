@@ -31,23 +31,8 @@
 
         - include_vars: vars/sql.yaml
 
-    - name: total
+    - name: report
       block:
-
-        # - name: run total report
-        #   docker_container:
-        #     name: ambi_vault_billing_total_report
-        #     image: mysql:5.7
-        #     command: sh -c "exec mysql -h${RDS_HOST} -P3306 -u${RDS_USER} -p${RDS_PASS} -e \"{{ sql_query_total }}\" ${RDS_PASS}"
-        #     state: started
-        #     restart: no
-        #     auto_remove: no
-        #     env:
-        #       RDS_HOST: "{{ rds_host }}"
-        #       RDS_DB: "{{ rds_db }}"
-        #       RDS_USER: "{{ rds_user }}"
-        #       RDS_PASS: "{{ rds_pass }}"
-        #   register: total_report
 
         - name: run total report
           shell: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_total }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/total.csv
