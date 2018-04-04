@@ -10,7 +10,7 @@
   # {{ rds_user }}
 
   pre_tasks:
-    
+
     - name: check to see if pip is already installed
       command: "pip --version"
       ignore_errors: true
@@ -29,7 +29,8 @@
             version: "{{ item.value }}"
           with_dict:
             docker: 2.7.0
-
+      
+      become: true
       when: pip_is_installed.rc != 0
 
   tasks:
