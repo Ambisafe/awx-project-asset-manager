@@ -11,7 +11,7 @@
 
   vars:
 
-    report_file_name: "~/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip"
+    report_file_name: "/tmp/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip"
 
   pre_tasks:
 
@@ -64,7 +64,7 @@
             from: awx@ambisafe.com (Ambisafe AWX)
             to:
               - Oleh Vasylenko <ihor@ambisafe.com>
-            attach: "{{ report_file_name }}"
+            attach: /tmp/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip
 
         - file:
             path: "{{ report_file_name }}"
