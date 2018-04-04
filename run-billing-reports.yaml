@@ -23,7 +23,7 @@
           docker_container:
             name: ambi_vault_billing_total_report
             image: mysql:5.7
-            command: sh -c "exec mysql -h${RDS_HOST} -P3306 -u${RDS_USER} -p${RDS_PASS} -e \"{{ sql_total_report }}\"" ${RDS_DB}
+            command: sh -c "exec mysql -h${RDS_HOST} -P3306 -u${RDS_USER} -p${RDS_PASS} -e \"{{ sql_query_total }}\"" ${RDS_DB}
             state: started
             restart: no
             auto_remove: no

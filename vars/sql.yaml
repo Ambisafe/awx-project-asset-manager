@@ -1,11 +1,11 @@
-sql_total_query: |
+sql_query_total: |
   select 
   ( select count(*) from accounts_ethereumcurrency where address != '' ) as TotalOrganizations,
   ( select count(*) from users_user ) as TotalUsers,
   ( select count(*) from transactions_ethereumtransaction ) as TotalTransactions;
 
-sql_org_address: |
+sql_query_org_address: |
   select address as OrganizationsAddresses from accounts_ethereumcurrency where address != '';
 
-sql_active_users: |
+sql_query_active_users: |
   select user_id as ActiveUsers, count(*) from transactions_ethereumtransactionconfirmation group by user_id;
