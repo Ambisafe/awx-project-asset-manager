@@ -53,7 +53,7 @@
         #   register: total_report
 
         - name: run total report
-          command: mysql -h {{ lookup('env','RDS_HOST') }} -u {{ lookup('env','RDS_USER') }} -p {{ lookup('env','RDS_PASS') }} {{ lookup('env','RDS_PASS') }} -Ns -e "{{ sql_query_total }}"
+          command: mysql -s -h {{ rds_host }} -u {{ rds_user }} -p {{ rds_pass }} -e "{{ sql_query_total }}" {{ rds_db }}
           register: total_report
 
         - debug:
