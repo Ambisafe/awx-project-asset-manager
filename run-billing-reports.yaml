@@ -9,12 +9,13 @@
   # {{ rds_pass }}
   # {{ rds_user }}
 
-  pre-tasks:
-
-    - include_vars: vars/sql.yaml
-
   tasks:
-  
+    
+    - name: vars
+      block:
+
+        - include_vars: vars/sql.yaml
+        
     - name: total
       block:
 
