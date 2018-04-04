@@ -26,26 +26,6 @@
             name: mysql
             state: present
 
-        - name: check to see if pip is already installed
-          command: "pip --version"
-          ignore_errors: true
-          register: pip_is_installed
-          changed_when: false
-
-        - name: install pip
-          command: /usr/bin/easy_install-2.7 pip
-          become: true
-          when: pip_is_installed.rc != 0
-
-        - name: install deps
-          pip:
-            name: "{{ item.key }}"
-            version: "{{ item.value }}"
-            executable: pip2.7
-            extra_args: --ignore-installed
-          with_dict:
-            MySQL-python: 1.2.5
-
   tasks:
     
     - name: vars
