@@ -27,6 +27,7 @@
           pip:
             name: "{{ item.key }}"
             version: "{{ item.value }}"
+            executable: pip2.7
           with_dict:
             docker: 2.7.0
       
