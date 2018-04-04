@@ -8,4 +8,4 @@ sql_query_org_address: >-
   select address as OrganizationsAddresses from accounts_ethereumcurrency where address != '';
 
 sql_query_active_users: >-
-  select user_id as ActiveUsers, count(*) from transactions_ethereumtransactionconfirmation group by user_id;
+  select user_id as User, count(*) as TransactionCount from transactions_ethereumtransactionconfirmation group by user_id;
