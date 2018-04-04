@@ -43,7 +43,7 @@
         - name: run active users report
           shell: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_active_users }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/active_users.csv
 
-        - name: Create a bz2 archive of multiple files, rooted at /path
+        - name: archive reports
           archive:
             path:
               - /tmp/total.csv
@@ -63,6 +63,7 @@
               - Oleh Vasylenko <ihor@ambisafe.com>
             attach:
               - "{{ report_file_name }}"
+          delegate_to: localhost
 
         - file:
             path: "{{ report_file_name }}"
