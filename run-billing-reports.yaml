@@ -61,10 +61,12 @@
         - name: run active users report
           shell: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_active_users }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/active_users.csv
 
-        - file:
-            path: "{{ item }}"
-            state: absent
-          with_items:
-            - /tmp/total.csv
-            - /tmp/org_address.csv
-            - /tmp/active_users.csv
+        - name: Create a bz2 archive of multiple files, rooted at /path
+          archive:
+            path:
+              - /tmp/total.csv
+              - /tmp/org_address.csv
+              - /tmp/active_users.csv
+            dest: /tmp/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip
+            remove: yes
+            format: zip
