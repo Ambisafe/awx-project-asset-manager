@@ -53,21 +53,21 @@
         #   register: total_report
 
         - name: run total report
-          command: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_total }}" {{ rds_db }} | while read; do sed 's/\t/,/g'; done
+          command: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_total }}" {{ rds_db }} | sed "s/\t/,/g;"
           register: total_report
 
         - debug:
             var: total_report.stdout
 
         - name: run org address report
-          command: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_org_address }}" {{ rds_db }}
+          command: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_org_address }}" {{ rds_db }} | sed "s/\t/,/g;"
           register: org_report
 
         - debug:
             var: org_report.stdout
 
         - name: run active users report
-          command: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_active_users }}" {{ rds_db }}
+          command: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_active_users }}" {{ rds_db }} | sed "s/\t/,/g;"
           register: users_report
 
         - debug:
