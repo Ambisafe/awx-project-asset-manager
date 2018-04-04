@@ -45,7 +45,7 @@
         - name: run active users report
           shell: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_active_users }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/active_users.csv
           no_log: true
-          
+
         - name: archive reports
           archive:
             path:
@@ -64,8 +64,7 @@
             from: awx@ambisafe.com (Ambisafe AWX)
             to:
               - Oleh Vasylenko <ihor@ambisafe.com>
-            attach:
-              - "{{ report_file_name }}"
+            attach: "{{ report_file_name }}"
 
         - file:
             path: "{{ report_file_name }}"
