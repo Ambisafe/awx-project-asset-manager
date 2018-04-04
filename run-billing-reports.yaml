@@ -9,12 +9,9 @@
   # {{ rds_pass }}
   # {{ rds_user }}
 
-  environment:
+  vars:
 
-    RDS_DB: "{{ rds_db }}"
-    RDS_HOST: "{{ rds_host }}"
-    RDS_PASS: "{{ rds_pass }}"
-    RDS_USER: "{{ rds_user }}"
+    report_file_name: "/tmp/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip"
 
   pre_tasks:
 
@@ -67,6 +64,22 @@
               - /tmp/total.csv
               - /tmp/org_address.csv
               - /tmp/active_users.csv
-            dest: /tmp/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip
+            dest: "{{ report_file_name }}"
             remove: yes
             format: zip
+
+        - name: send e-mail user
+          mail:
+            host: 127.0.0.1
+            port: 25
+            subject: Ambi Vault Weekly Report ({{ lookup('pipe','date +%Y-%m-%d') }})
+            from: awx@ambisafe.com (Ambisafe AWX)
+            to:
+              - Oleh Vasylenko <ihor@ambisafe.com>
+            attach:
+              - "{{ report_file_name }}"
+
+        - file:
+            path: "{{ report_file_name }}"
+            state: absent
+            
