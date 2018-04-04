@@ -62,8 +62,7 @@
             port: 25
             subject: Ambi Vault Weekly Report ({{ lookup('pipe','date +%Y-%m-%d') }})
             from: awx@ambisafe.com (Ambisafe AWX)
-            to:
-              - Oleh Vasylenko <ihor@ambisafe.com>
+            to: Oleh Vasylenko <ihor@ambisafe.com>
             attach: /tmp/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip
 
         - file:
