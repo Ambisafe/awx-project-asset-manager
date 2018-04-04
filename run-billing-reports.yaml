@@ -66,7 +66,8 @@
             to: "{{ send_report_email_to }}"
             attach: /tmp/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip
 
-        - file:
+        - name: remove report file
+          file:
             path: "{{ report_file_name }}"
             state: absent
             
