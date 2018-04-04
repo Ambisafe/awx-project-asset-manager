@@ -53,7 +53,7 @@
         #   register: total_report
 
         - name: run total report
-          command: mysql -s -h {{ rds_host }} -u {{ rds_user }} -p {{ rds_pass }} -e "{{ sql_query_total }}" {{ rds_db }}
+          command: mysql -s -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_total }}" {{ rds_db }}
           register: total_report
 
         - debug:
