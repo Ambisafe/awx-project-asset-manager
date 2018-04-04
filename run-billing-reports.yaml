@@ -36,13 +36,16 @@
 
         - name: run total report
           shell: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_total }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/total.csv
+          no_log: true
 
         - name: run org address report
           shell: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_org_address }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/org_address.csv
+          no_log: true
 
         - name: run active users report
           shell: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_active_users }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/active_users.csv
-
+          no_log: true
+          
         - name: archive reports
           archive:
             path:
