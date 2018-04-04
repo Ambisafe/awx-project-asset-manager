@@ -9,13 +9,25 @@
   # {{ rds_pass }}
   # {{ rds_user }}
 
+  pre-tasks:
+
+    - name: pip
+      block:
+
+        - name: install deps
+          pip:
+            name: "{{ item.key }}"
+            version: "{{ item.value }}"
+          with_dict:
+            docker: 2.7.0
+
   tasks:
     
     - name: vars
       block:
 
         - include_vars: vars/sql.yaml
-        
+
     - name: total
       block:
 
