@@ -1,0 +1,33 @@
+- name: run report tasks
+  hosts: all
+  gather_facts: False
+
+  # variables passed from AWX job survey:
+
+  # {{ rds_db }}
+  # {{ rds_host }}
+  # {{ rds_pass }}
+  # {{ rds_user }}
+
+  tasks:
+  
+    - name: total
+      block:
+
+        - name: run total report
+          docker_container:
+            name: ambi_vault_billing_total_report
+            image: mysql:5.7
+            command: sh -c "exec mysql -h${RDS_HOST} -P3306 -u${RDS_USER} -p${RDS_PASS} -e \"{{ sql_total_report }}\"" ${RDS_DB}
+            state: started
+            restart: no
+            auto_remove: no
+            env:
+              RDS_HOST: "{{ rds_host }}"
+              RDS_DB: "{{ rds_db }}"
+              RDS_USER: "{{ rds_user }}"
+              RDS_PASS: "{{ rds_pass }}"
+          register: total_report
+
+        - debug:
+            var: total_report
