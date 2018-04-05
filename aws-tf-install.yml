@@ -25,8 +25,6 @@
     # {{ db_instance_type | string }}
     # {{ db_allocated_storage_size | integer }}
 
-    # {{ db_skip_final_snapshot | string }}
-
     # {{ ecc_node_type | string }}
     # {{ ecc_num_cache_nodes | string }}
 
@@ -68,6 +66,9 @@
         ecs_instance_type: "{{ ecs_instance_type }}"
         ecs_block_device_size: "{{ ecs_block_device_size }}"
         ecs_ssh_public_key: "{{ ssh_public_key }}"
+        ecs_sg_cidr_blocks:
+        - "185.41.248.158/32"
+        - "13.229.188.86/32"
 
         ecc_node_type: "{{ ecc_node_type }}"
         ecc_num_cache_nodes: "{{ ecc_num_cache_nodes }}"
@@ -84,7 +85,6 @@
         db_name: "{{ rds_db }}"
         db_username: "{{ rds_user }}"
         db_password: "{{ rds_pass }}"
-        db_skip_final_snapshot: "{{ db_skip_final_snapshot }}"
 
         route53_domain_name: "{{ route53_domain_name }}"
         terraform_arg: "{{ terraform_arg }}"
