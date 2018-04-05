@@ -69,6 +69,7 @@
         ecs_sg_cidr_blocks:
         - "185.41.248.158/32"
         - "13.229.188.86/32"
+        ecs_nginx_conf_b64: "{{ lookup('file', 'files/nginx.conf') | base64 }}"
 
         ecc_node_type: "{{ ecc_node_type }}"
         ecc_num_cache_nodes: "{{ ecc_num_cache_nodes }}"

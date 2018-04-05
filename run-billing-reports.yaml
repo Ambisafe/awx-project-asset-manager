@@ -1,0 +1,73 @@
+- name: run report tasks
+  hosts: all
+  gather_facts: False
+
+  # variables passed from AWX job survey:
+
+  # {{ rds_db }}
+  # {{ rds_host }}
+  # {{ rds_pass }}
+  # {{ rds_user }}
+  # {{ send_report_email_to }}
+
+  vars:
+
+    report_file_name: "/tmp/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip"
+
+  pre_tasks:
+
+    - name: pip
+      block:
+
+        - name: install mysql-client
+          package:
+            name: mysql
+            state: present
+          become: true
+
+  tasks:
+    
+    - name: vars
+      block:
+
+        - include_vars: vars/sql.yaml
+
+    - name: report
+      block:
+
+        - name: run total report
+          shell: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_total }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/total.csv
+          no_log: true
+
+        - name: run org address report
+          shell: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_org_address }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/org_address.csv
+          no_log: true
+
+        - name: run active users report
+          shell: mysql -h {{ rds_host }} -u {{ rds_user }} -p{{ rds_pass }} -e "{{ sql_query_active_users }}" -D {{ rds_db }} | sed "s/\t/,/g;" > /tmp/active_users.csv
+          no_log: true
+
+        - name: archive reports
+          archive:
+            path:
+              - /tmp/total.csv
+              - /tmp/org_address.csv
+              - /tmp/active_users.csv
+            dest: "{{ report_file_name }}"
+            remove: yes
+            format: zip
+
+        - name: send e-mail user
+          mail:
+            host: 127.0.0.1
+            port: 25
+            subject: Ambi Vault Weekly Report ({{ lookup('pipe','date +%Y-%m-%d') }})
+            from: awx@ambisafe.com (Ambisafe AWX)
+            to: "{{ send_report_email_to }}"
+            attach: /tmp/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip
+
+        - name: remove report file
+          file:
+            path: "{{ report_file_name }}"
+            state: absent
+            
