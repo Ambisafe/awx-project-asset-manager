@@ -27,7 +27,7 @@
           become: true
 
   tasks:
-    
+
     - name: vars
       block:
 
@@ -71,4 +71,4 @@
           file:
             path: "{{ report_file_name }}"
             state: absent
-            
+

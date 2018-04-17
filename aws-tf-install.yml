@@ -29,8 +29,7 @@
   # surveys:
   #
   # {{ project_env_zone }}
-  # {{ project_zone_route53 }}
-  # {{ project_zone_cloudflare }}
+  # {{ domain_name_system }}
   # {{ terraform_arg }}
 
   vars:
@@ -48,6 +47,8 @@
     - include_role:
         name: terraform-aws
       vars:
+        project_zone_route53:  "{{ true if domain_name_system == 'AWS Route53' else false }}"
+        project_zone_cloudflare: "{{ true if domain_name_system == 'Cloudflare' else false }}"
         project_type: "{{ project_type }}"
         project_name: "{{ project_name }}"
         project_deployment_environment: "{{ project_env_name }}"
