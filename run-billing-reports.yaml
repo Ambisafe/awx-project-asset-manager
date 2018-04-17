@@ -12,6 +12,7 @@
 
   vars:
 
+    send_report_email_to: Oleh Vasylenko <oleh@ambisafe.com>
     report_file_name: "/tmp/ambi_vault_report_{{ lookup('pipe','date +%Y%m%d') }}.zip"
 
   pre_tasks:
